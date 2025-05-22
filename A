@@ -11,10 +11,43 @@ class MurderStatsManager:
 
     def get_stats(self):
         return self.data
+
+   
+    def get_city_stats(self, continent, country, city):
+        try:
+            return self.data[continent][country][city]
+        except KeyError:
+            return f"Data for {city}, {country} not found."
+
+   
+    def remove_city(self, continent, country, city):
+        try:
+            del self.data[continent][country][city]
+            return f"City {city} removed successfully."
+        except KeyError:
+            return f"City {city} not found."
+
 if __name__ == "__main__":
     manager = MurderStatsManager()
+
+  
     manager.add_data("Europe", "Estonia", "Tallinn", 5)
     manager.add_data("Europe", "Finland", "Helsinki", 3)
     manager.add_data("Asia", "Japan", "Tokyo", 8)
 
+  
+    manager.add_data("Africa", "Nigeria", "Lagos", 500)
+    manager.add_data("Africa", "South Africa", "Cape Town", 800)
+    manager.add_data("Africa", "Kenya", "Nairobi", 200)
+
+   
+    print(manager.get_city_stats("Africa", "Nigeria", "Lagos")) 
+    print(manager.get_city_stats("Asia", "Japan", "Tokyo")) 
+    print(manager.get_city_stats("Europe", "Estonia", "Tallinn")) 
+
+  
+    print(manager.remove_city("Africa", "Nigeria", "Lagos")) 
+    print(manager.get_city_stats("Africa", "Nigeria", "Lagos"))  
+
+    
     print(manager.get_stats())
